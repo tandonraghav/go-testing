@@ -27,8 +27,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	response, _ := http.Get("https://google.com/")
 	fmt.Println(response)
-	body, _ := ioutil.ReadAll(response.Body)
-
-	w.WriteHeader(http.StatusOK)
-	w.Write(body)
+	if response!=nil{
+		body, _ := ioutil.ReadAll(response.Body)
+		w.Write(body)
+		w.WriteHeader(response.StatusCode)
+	}else{
+		w.WriteHeader(400)
+	}
 }
